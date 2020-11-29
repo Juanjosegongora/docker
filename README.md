@@ -1,5 +1,11 @@
-# DOCKER
-## JUAN JOSE GONGORA CONTRERAS
+---
+title: "DOCKER, DOCKER-COMPOSE Y DOCKERFILE"
+author: [Juan José Góngora Contreras]
+subject: "Markdown"
+keywords: [Markdown, README]
+lang: "en"
+toc-own-page: "true"
+---
 
 # INSTALACION Y CONFIGURACION DE DOCKER EN LINUX
 
