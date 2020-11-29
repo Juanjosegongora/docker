@@ -19,10 +19,10 @@ Una imagen de docker es una instantanea del contenedor, las puedes descargar o t
 
 ## INSTALACION Y CONFIGURACION DE DOCKER EN LINUX
 
-## OPENSUSE
+### OPENSUSE
 Para instalar docker en opensuse simplemente buscarlo en yast y que nos instale las dependencias
 
-## UBUNTU
+### UBUNTU
 Para instalar docker en ubuntu con el siguiente comando.
 ```
 apt install docker.io
@@ -141,10 +141,10 @@ Docker-compose es lo que nos va a permitir iniciar varios contenedores al mismo 
 
 ## INSTALACION DE DOCKER-COMPOSE EN LINUX
 
-## OPENSUSE
+### OPENSUSE
 Para instalar docker en opensuse simplemente buscarlo en yast y que nos instale las dependencias
 
-## UBUNTU
+### UBUNTU
 Para instalar docker-compose en ubuntu con el siguiente comando.
 ```
 apt install docker-compose
