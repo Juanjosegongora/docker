@@ -19,6 +19,7 @@ IMPORTANTE: RECOMIENDO GESTIONAR LOS CONTENEDORES Y TRABAJAR CON DOCKER DE ESTA 
 ```
 usermod -G docker tote
 ```
+tote es mi usuario.
 
 ## CREACION DE UN CONTENDOR MYSQL PARA EJEMPLO.
 Descargaremos la ultima imagen de mysql con el siguiente comando.
