@@ -6,8 +6,18 @@ keywords: [Markdown, README]
 lang: "en"
 toc-own-page: "true"
 ---
+# DOCKER
 
-# INSTALACION Y CONFIGURACION DE DOCKER EN LINUX
+## QUE ES UN CONTENDOR.
+
+Un contenedor es un proceso que ha sido aislado de todos los demás procesos en la máquina anfitriona. Ese aislamiento aprovecha características de Linux como los namespaces del kernel y cgroups. Aunque es posible tener más de un proceso en un contenedor las buenas prácticas nos recomiendan ejecutar sólo un proceso por contenedor (PID 1).
+
+Algunas ventajas son que podemos tener bastantes contenedores en máquinas puesto que comparten el mismo núcleo el contenedor que la máquina anfitriona, levantar un contenedor es rápido y también nos proporcionan que son portátiles puesto que tenemos la imagen.
+
+## QUE ES UNA IMAGEN DE DOCKER HUB
+Una imagen de docker es una instantanea del contenedor, las puedes descargar o tambien se pueden crear mediante un archivo DockerFile
+
+## INSTALACION Y CONFIGURACION DE DOCKER EN LINUX
 
 ## OPENSUSE
 Para instalar docker en opensuse simplemente buscarlo en yast y que nos instale las dependencias
@@ -67,7 +77,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 b91ce825abd4        mysql               "docker-entrypoint.s…"   8 seconds ago       Up 6 seconds        0.0.0.0:3306->3306/tcp, 33060/tcp   mysql-latest
 ```
 
-# ACCESO A LA BASE DE DATOS.
+## ACCESO A LA BASE DE DATOS.
 
 Podemos probar la conexion a la base de datos con mysql-workbench por ejemplo, para instalarlo o desde yast o desde comandos en ubbuntu, nombre del paquete `mysql-workbench`
 
@@ -93,7 +103,7 @@ mysql -u root -p
 
 Para salir del modo interactivo de docker con poner un simple `exit` nos vale.
 
-# DETENCION Y ELIMINADO DE CONTENEDORES.
+## DETENCION Y ELIMINADO DE CONTENEDORES.
 
 Para parar un contendor, pararlo, no eliminarlo, usamos la orden.
 ```
@@ -125,7 +135,20 @@ docker run -d --name mysql-latest -e MYSQL_ROOT_PASSWORD=root -v /home/tote/.con
 Y como el bind mount es el mismo los archivos estaran ahi y tendremos el mysql como se quedo.
 
 # DOCKER-COMPOSE
-Esto se hace con `docker-compose` asi que hay que instalarlo, mediante yast para openSUSE o mediante comando para ubuntu.
+
+## QUE ES DOCKER-COMPOSE
+Docker-compose es lo que nos va a permitir iniciar varios contenedores al mismo tiempo mediante un archivo `docker-compose.yaml` podemos los contenedores que vamos a ejecutar con sus preferencias de esta forma tenemos la ventaja de poder crear redes y que los contenedores esten conectados unos con otros mediante la red de docker.
+
+## INSTALACION DE DOCKER-COMPOSE EN LINUX
+
+## OPENSUSE
+Para instalar docker en opensuse simplemente buscarlo en yast y que nos instale las dependencias
+
+## UBUNTU
+Para instalar docker-compose en ubuntu con el siguiente comando.
+```
+apt install docker-compose
+```
 
 Una vez instalado para la utilizacion de docker-compose es necesaria la creacion de archivos `yaml`
 
@@ -152,7 +175,9 @@ Esto de forma interactiva, si queremos de forma en la que se ejecute de fondo se
 docker-compose up -d
 ```
 
-Para la creacion de dos contenedores conectados como en este ejemplo podria ser un servidor mysq y un cliente phpmyadmin tendriamos que crear una red virtual de docker, en el archivo yaml se puede hacer todo, para la creacion de lo que seria phpmyadmin el archivo seria el siguiente
+## CREACION DE UN MYSQL Y UN PHPMYADMIN DE EJEMPLO
+
+Para la creacion de dos contenedores conectados como en este ejemplo podria ser un servidor mysql y un cliente phpmyadmin tendriamos que crear una red virtual de docker, en el archivo yaml se puede hacer todo, para la creacion de lo que seria phpmyadmin el archivo seria el siguiente
 
 ```
 version: '3'
@@ -167,7 +192,7 @@ services:
 
 Con la environment `PMA_HOST` le decimos cual sera nuestra base de datos, ponemos ponerle la ip que le asigna docker o mas facilmente, docker tiene instalado como un dns entre sus redes y con el nombre del contenedor SIEMPRE que esten en la misma red de docker.
 
-Pues para ejecutar los dos abria que ponerlos en un docker-compose juntos y tocar algunas cosas, seria algo asi...
+Pues para ejecutar los dos habria que ponerlos en un docker-compose juntos y tocar algunas cosas, seria algo asi...
 
 ```
 version: '3'
@@ -207,3 +232,5 @@ Ya simplemente faltaria lanzar el docker-compose, nos situamos en la carpeta en 
 docker-compose up -d
 ```
 Si nos vamos a un navegador y ponemos localhost, al estar en el puerto 80 nos saltara el phpmyadmin que si ponemos las credenciales del root nos dara acceso a la base de datos.
+
+# DOCKERFILE
