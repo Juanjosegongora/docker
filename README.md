@@ -124,5 +124,79 @@ Una vez instalado para la utilizacion de docker-compose es necesaria la creacion
 
 Los archivos yaml para docker-compose son como un comando de docker pero separados con cada una de las opciones y nos permiten la gestion de redes y de mas contenedores al mismo tiempo, por ejemplo para el ejemplo de mysql de antes en docker compose el contenido del archivo yaml seria algo asi...
 ```
+version: '3'
+services:
+    mysql-latest:
+        image: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        ports:
+            - 3306:3306
+        volumes:
+            - /home/tote/.conf:/var/lib/mysql
+```
+
+El fichero yaml tiene que llamarse `docker-compose.yaml` y para ejecutarlo tenemos que usar
+```
+docker-compose up
+```
+Esto de forma interactiva, si queremos de forma en la que se ejecute de fondo seria con...
+```
+docker-compose up -d
+```
+
+Para la creacion de dos contenedores conectados como en este ejemplo podria ser un servidor mysq y un cliente phpmyadmin tendriamos que crear una red virtual de docker, en el archivo yaml se puede hacer todo, para la creacion de lo que seria phpmyadmin el archivo seria el siguiente
 
 ```
+version: '3'
+services:
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=mysql-latest
+        ports:
+            - 80:80
+```
+
+Con la environment `PMA_HOST` le decimos cual sera nuestra base de datos, ponemos ponerle la ip que le asigna docker o mas facilmente, docker tiene instalado como un dns entre sus redes y con el nombre del contenedor SIEMPRE que esten en la misma red de docker.
+
+Pues para ejecutar los dos abria que ponerlos en un docker-compose juntos y tocar algunas cosas, seria algo asi...
+
+```
+version: '3'
+services:
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=mysql-latest
+        ports:
+            - 80:80
+        networks:
+            - default-net
+        depends_on: 
+            - mysql-latest
+    mysql-latest:
+        image: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - /home/tote/.conf:/var/lib/mysql
+        networks:
+            - default-net
+networks:
+    default-net:
+```
+
+El apartado `networks` es nuevo, aqui lo que estamos diciendo es a que red estara conectado este contendor (Es una red que yo me he inventado su nombre) Si os fijais los dos tienen la misma porque sino no tendrian conexion entre ellos.
+
+El apartado `depends_on` lo que hace simplemente es que ese contenedor depende de que otro se incie primero para la configuracion entonces primero docker-compose inciara mysql porque phpmyadmin depende de el.
+
+Si nos fijamos ahora mysql no tiene un puerto desde fuera, porque no hace falta para phpmyadmin, estan en la misma red interna entonces no hace falta que se le habra un puerto en la maquina real.(Si quisieramos acceder con workbench si tendriamos que ponerlo, pero como tenemos phpmyadmin es un poco inutil tener dos gestores.)
+
+Por ultimo tenemos el apartado `networks` que es un apartado importante, para que las redes que hemos dicho antes funcionen hay que crearlas, y este apartado es el que se encarga de ello, aqui simplemente debemos poner todas las redes que vayamos a utilizar en un archivo docker-compose.yaml
+
+Ya simplemente faltaria lanzar el docker-compose, nos situamos en la carpeta en la que esta y ejecutamos la orden.
+```
+docker-compose up -d
+```
+Si nos vamos a un navegador y ponemos localhost, al estar en el puerto 80 nos saltara el phpmyadmin que si ponemos las credenciales del root nos dara acceso a la base de datos.

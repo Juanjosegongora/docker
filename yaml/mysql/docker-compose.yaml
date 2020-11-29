@@ -1,0 +1,10 @@
+version: '3'
+services:
+    mysql-latest:
+        image: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        ports:
+            - 3306:3306
+        volumes:
+            - /home/tote/.conf:/var/lib/mysql

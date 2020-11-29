@@ -1,0 +1,22 @@
+version: '3'
+services:
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=mysql-latest
+        ports:
+            - 80:80
+        networks:
+            - default-net
+        depends_on: 
+            - mysql-latest
+    mysql-latest:
+        image: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - /home/tote/.conf:/var/lib/mysql
+        networks:
+            - default-net
+networks:
+    default-net:
