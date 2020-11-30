@@ -35,7 +35,8 @@ IMPORTANTE: RECOMIENDO GESTIONAR LOS CONTENEDORES Y TRABAJAR CON DOCKER DE ESTA 
 ```
 usermod -G docker tote
 ```
-tote es mi usuario.
+Docker es el grupo que crea docker por defecto y tote es mi usuario que debeis poner el vuestro.
+Hay y reiniciar la maquina, con el servicio deberia de bastar pero mejor maquina completa.
 
 ## CREACION DE UN CONTENDOR MYSQL PARA EJEMPLO.
 Descargaremos la ultima imagen de mysql con el siguiente comando.
